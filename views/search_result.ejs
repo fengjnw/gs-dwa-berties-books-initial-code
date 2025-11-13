@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= shopData.shopName %> Search Results
+    </title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+    <h1>Search Results for "<%= search_text %>"</h1>
+    <ul>
+        <% searched_books.forEach(book=> { %>
+            <li>
+                <%= book.name %>, $<%= book.price %>
+            </li>
+            <% }); %>
+    </ul>
+</body>
+
+</html>

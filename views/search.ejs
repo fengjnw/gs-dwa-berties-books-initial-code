@@ -1,15 +1,26 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Search <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
-    <h1>Search <%=shopData.shopName%></h1>
-    <form action="search_result" method="GET">
-      <p>What book do you want?</p>
-      <input id="search-box" type="text" name="search_text">
-      <input type="submit" value="Search" >
-    </form>
-  </body>
+
+<head>
+  <title>Search <%=shopData.shopName%>
+  </title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+  <h1>Search <%=shopData.shopName%>
+  </h1>
+  <form action="/books/search_result" method="GET">
+    <p>What book do you want?</p>
+    <input id="search-box" type="text" name="search_text">
+    <br>
+    <input id="search_mode" type="radio" name="search_mode" value="Exact Match" checked>
+    <label for="Exact Match">Exact Match</label>
+    <input id="search_mode" type="radio" name="search_mode" value="Partial Match">
+    <label for="Partial Match">Partial Match</label>
+    <br>
+    <input type="submit" value="Search">
+  </form>
+</body>
+
 </html>
