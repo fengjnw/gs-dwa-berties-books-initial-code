@@ -7,10 +7,12 @@ router.get('/', function (req, res, next) {
     res.render('index.ejs')
 });
 
+// Handle about page request
 router.get('/about', function (req, res, next) {
     res.render('about.ejs')
 });
 
+// Handle add book request
 router.post('/bookadded', function (req, res, next) {
     // saving data in database
     let sqlquery = "INSERT INTO books (name, price) VALUES (?,?)"

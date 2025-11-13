@@ -41,6 +41,7 @@ router.get('/search_result', function (req, res, next) {
     });
 });
 
+// Handle list books request
 router.get('/list', function (req, res, next) {
     let sqlquery = "SELECT * FROM books"; // query database to get all the books
     // execute sql query
@@ -56,6 +57,7 @@ router.get('/addbook', function (req, res, next) {
     res.render("addbook.ejs")
 });
 
+// Handle bargain books request
 router.get('/bargainbooks', function (req, res, next) {
     let sqlquery = "SELECT * FROM books WHERE price < 20"; // query database to get all the books cheaper than 20
     // execute sql query
