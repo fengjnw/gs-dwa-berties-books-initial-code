@@ -12,7 +12,7 @@ router.get('/search_result', function (req, res, next) {
     //searching in the database
     // validate input
     if (!req.query.search_text) {
-        res.send("Please enter a search term.");
+        res.send("Please enter a search term." + "<br>" + "<a href='/books/search'>Back</a>");
         return;
     }
     // build query and search term, depending on search mode
@@ -34,7 +34,7 @@ router.get('/search_result', function (req, res, next) {
         }
         // if no books found, inform the user
         if (result.length === 0) {
-            res.send("No books found.");
+            res.send("No books found." + "<br>" + "<a href='/books/search'>Back</a>");
             return;
         }
         res.render("search_result.ejs", { searched_books: result, search_text: req.query.search_text })
@@ -48,6 +48,10 @@ router.get('/list', function (req, res, next) {
     db.query(sqlquery, (err, result) => {
         if (err) {
             next(err)
+        }
+        if (result.length === 0) {
+            res.send("No books for now." + "<br>" + "<a href='/'>Back</a>");
+            return;
         }
         res.render("list.ejs", { availableBooks: result })
     });
@@ -64,6 +68,10 @@ router.get('/bargainbooks', function (req, res, next) {
     db.query(sqlquery, (err, result) => {
         if (err) {
             next(err)
+        }
+        if (result.length === 0) {
+            res.send("No books on bargain offer for now." + "<br>" + "<a href='/'>Back</a>");
+            return;
         }
         res.render("bargainbooks.ejs", { bargainBooks: result })
     });
