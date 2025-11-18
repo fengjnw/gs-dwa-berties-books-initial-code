@@ -68,7 +68,8 @@ router.get('/delete/:id', function (req, res, next) {
         if (err) {
             next(err)
         } else {
-            res.redirect(`${req.baseUrl}/list`);
+            const prefix = req.originalUrl.replace(req.path, '');
+            res.redirect(`${prefix}/list`);
         }
     });
 });
