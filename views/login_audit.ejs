@@ -23,6 +23,7 @@
                 <th scope="col">IP Address</th>
                 <th scope="col">Reason</th>
                 <th scope="col">Time</th>
+                <th scope="col">Operation</th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +43,9 @@
                     </td>
                     <td>
                         <%= new Date(attempt.timestamp).toLocaleString('en-GB') %>
+                    </td>
+                    <td>
+                        <a href="/users/audit/delete/<%= attempt.id %>">Delete</a>
                     </td>
                 </tr>
                 <% }); %>

@@ -133,5 +133,19 @@ router.get('/audit', function (req, res, next) {
     });
 });
 
+// Handle delete login attempt request
+router.get('/audit/delete/:id', function (req, res, next) {
+    let attemptId = req.params.id;
+    let sqlquery = "DELETE FROM login_attempts WHERE id = ?"; // query database to delete the login attempt with the specified id
+    // execute sql query
+    db.query(sqlquery, [attemptId], (err, result) => {
+        if (err) {
+            next(err)
+        } else {
+            res.redirect('../../audit');
+        }
+    });
+});
+
 // Export the router object so index.js can access it
 module.exports = router
