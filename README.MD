@@ -20,7 +20,6 @@ node index.js
 ```
 BB_HOST='localhost'
 ```
-
 - Variables are stored in a `.env` file and loaded at runtime by `process.env.VARIABLE_NAME`. For example:
 ```
 host: process.env.BB_HOST
@@ -45,6 +44,9 @@ host: process.env.BB_HOST
 
 ### Back buttons
 - Added back buttons to relevant pages for better navigation.
+
+### Searching
+- Users can search for books by title, with options for exact or partial matches.
 
 ---
 
