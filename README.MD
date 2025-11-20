@@ -8,6 +8,7 @@ Uses node.js with Express and EJS.
 To install and run:
 
 npm install
+
 node index.js
 
 ---
@@ -17,12 +18,12 @@ node index.js
 ### Dotenv
 - Use `dotenv` package to manage environment variables for database connection details. For example:
 ```
-DB_HOST=localhost
+BB_HOST='localhost'
 ```
 
 - Variables are stored in a `.env` file and loaded at runtime by `process.env.VARIABLE_NAME`. For example:
 ```
-host: process.env.DB_HOST
+host: process.env.BB_HOST
 ```
 
 ### Audit
