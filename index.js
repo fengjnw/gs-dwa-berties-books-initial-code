@@ -1,6 +1,7 @@
 // Import express and ejs
 var express = require('express')
 var ejs = require('ejs')
+var session = require('express-session')
 const path = require('path')
 
 // Import mysql2
