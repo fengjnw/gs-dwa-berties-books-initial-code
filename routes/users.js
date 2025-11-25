@@ -14,6 +14,17 @@ router.post('/registered', function (req, res, next) {
         res.send("Please provide username, first name, last name, email, and password.");
         return;
     }
+    let sqlquery = "SELECT * FROM users WHERE username = ?";
+    // execute sql query to check if username already exists
+    db.query(sqlquery, [req.body.username], (err, result) => {
+        if (err) {
+            next(err)
+        }
+        if (result.length > 0) {
+            res.send("Username already exists. Please choose a different username." + "<br>" + "<a href='/users/register'>Back</a>");
+            return;
+        }
+    });
     // hash password
     const plainPassword = req.body.password;
     const saltRounds = 10
