@@ -80,7 +80,7 @@ router.get('/list', redirectLogin, function (req, res, next) {
 });
 
 // Handle delete user request
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', redirectLogin, function (req, res, next) {
     let userId = req.params.id;
     let sqlquery = "DELETE FROM users WHERE id = ?"; // query database to delete the user with the specified id
     // execute sql query
@@ -138,8 +138,18 @@ router.post('/loggedin', function (req, res, next) {
     });
 });
 
+router.get('/logout', redirectLogin, (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('./')
+        }
+        res.send('you are now logged out. <a href=' + '../' + '>Home</a>');
+    })
+})
+
+
 // Audit user login
-router.get('/audit', function (req, res, next) {
+router.get('/audit', redirectLogin, function (req, res, next) {
     let sqlquery = "SELECT * FROM login_attempts ORDER BY timestamp DESC";
     // execute sql query
     db.query(sqlquery, (err, result) => {
@@ -156,7 +166,7 @@ router.get('/audit', function (req, res, next) {
 });
 
 // Handle delete login attempt request
-router.get('/audit/delete/:id', function (req, res, next) {
+router.get('/audit/delete/:id', redirectLogin, function (req, res, next) {
     let attemptId = req.params.id;
     let sqlquery = "DELETE FROM login_attempts WHERE id = ?"; // query database to delete the login attempt with the specified id
     // execute sql query
@@ -171,3 +181,4 @@ router.get('/audit/delete/:id', function (req, res, next) {
 
 // Export the router object so index.js can access it
 module.exports = router
+module.exports.redirectLogin = redirectLogin;

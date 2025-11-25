@@ -1,6 +1,7 @@
 // Create a new router
 const express = require("express")
 const router = express.Router()
+const redirectLogin = require('./users').redirectLogin; // import the redirectLogin middleware
 
 // Handle search page request
 router.get('/search', function (req, res, next) {
@@ -58,12 +59,12 @@ router.get('/list', function (req, res, next) {
     });
 });
 
-router.get('/addbook', function (req, res, next) {
+router.get('/addbook', redirectLogin, function (req, res, next) {
     res.render("addbook.ejs")
 });
 
 // Handle add book request
-router.post('/bookadded', function (req, res, next) {
+router.post('/bookadded', redirectLogin, function (req, res, next) {
     // validate input
     if (!req.body.name || !req.body.price) {
         res.send("Please provide both name and price of the book." + "<br>" + "<a href='/books/addbook'>Back</a>");

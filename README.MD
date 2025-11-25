@@ -48,6 +48,11 @@ host: process.env.BB_HOST
 ### Searching
 - Users can search for books by title, with options for exact or partial matches.
 
+### Authentication middleware
+- A middleware function `redirectLogin` checks if a user is logged in before allowing access to certain routes (list and delete user, audit, add books).
+- If not logged in, the user is redirected to the login
+
+
 ---
 
 ## Project structure
