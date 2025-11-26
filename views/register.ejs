@@ -1,15 +1,6 @@
-<!doctype html>
-<html>
+<%- include('partials/header', { pageTitle: 'Register - ' + shopData.shopName }) %>
 
-<head>
-  <title>Register for <%=shopData.shopName%>
-  </title>
-  <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-  <h1>Register for <%=shopData.shopName%>
-  </h1>
+  <h2>Register</h2>
   <!-- Form to register a new user -->
   <form method="POST" action="registered">
     <p>User name: <input id="username" type="text" name="username" required /></p>
@@ -21,6 +12,5 @@
   </form>
   <br>
   <a href="/">Back</a>
-</body>
 
-</html>
+  <%- include('partials/footer') %>

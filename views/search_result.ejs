@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', { pageTitle: 'Search Results - ' + shopData.shopName }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= shopData.shopName %> Search Results
-    </title>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
     <!-- Display search results depending on search mode -->
     <% if (search_mode=="Exact Match" ) { %>
-        <h1>Exact Match Search Results for "<%= search_text %>"</h1>
+        <h2>Exact Match Search Results for "<%= search_text %>"</h2>
         <% } else { %>
-            <h1>Partial Match Search Results for "<%= search_text %>"</h1>
+            <h2>Partial Match Search Results for "<%= search_text %>"</h2>
             <% } %>
                 <!-- List of search results -->
                 <ul>
@@ -26,6 +15,5 @@
                         <% }); %>
                 </ul>
                 <a href="/books/search">Back</a>
-</body>
 
-</html>
+                <%- include('partials/footer') %>

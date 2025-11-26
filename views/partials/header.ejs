@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>
+        <%= typeof pageTitle !=='undefined' ? pageTitle : shopData.shopName %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+    <h1>
+        <%= shopData.shopName %>
+    </h1>
+    <p>
+        <% if (typeof session !=='undefined' && session.userId) { %>
+            Logged in as: <strong>
+                <%= session.userId %>
+            </strong> | <a href="/users/logout">Logout</a>
+            <% } else { %>
+                Not logged in | <a href="/users/login">Login</a> | <a href="/users/register">Register</a>
+                <% } %>
+    </p>
+    <hr>

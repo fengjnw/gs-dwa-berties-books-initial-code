@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', { pageTitle: 'Login Audit - ' + shopData.shopName }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Login Audit in <%=shopData.shopName%>
-    </title>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-    <h1>
-        Login Audit in <%=shopData.shopName%>
-    </h1>
-    <h2>Here are the login attempts:</h2>
+    <h2>Login Audit</h2>
+    <p>Here are the login attempts:</p>
     <table class="audit-table">
         <thead>
             <tr>
@@ -52,6 +39,5 @@
         </tbody>
     </table>
     <a href="/">Back</a>
-</body>
 
-</html>
+    <%- include('partials/footer') %>

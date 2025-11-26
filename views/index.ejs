@@ -1,15 +1,7 @@
-<!doctype html>
-<html>
+<%- include('partials/header') %>
 
-<head>
-  <title>Welcome to <%=shopData.shopName%>
-  </title>
-  <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-  <h1>Welcome to <%=shopData.shopName%>
-  </h1>
+  <h2>Welcome to <%=shopData.shopName%>
+  </h2>
   <!-- Navigation links -->
   <p><a href="about">About <%=shopData.shopName%></a></p>
   <p><a href="books/search">Search for books</a></p>
@@ -20,7 +12,5 @@
   <p><a href="books/addbook">Add a new book</a></p>
   <p><a href="books/list">List books</a></p>
   <p><a href="books/bargainbooks">Bargain books</a></p>
-  <p><a href="users/logout">Logout</a></p>
-</body>
 
-</html>
+  <%- include('partials/footer') %>

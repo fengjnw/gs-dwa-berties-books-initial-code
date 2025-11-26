@@ -1,113 +1,133 @@
-
 # Berties Books
 
-Sample code for Dynamic Web Applications module.
+Sample code for Dynamic Web Applications module using Node.js, Express, and EJS.
 
-Uses node.js with Express and EJS.
+## Installation and Setup
 
-To install and run:
-
+```bash
 npm install
-
 node index.js
-
----
-
-## Extensions
-
-### Dotenv
-- Use `dotenv` package to manage environment variables for database connection details. For example:
-```
-BB_HOST='localhost'
-```
-- Variables are stored in a `.env` file and loaded at runtime by `process.env.VARIABLE_NAME`. For example:
-```
-host: process.env.BB_HOST
 ```
 
-### Audit
-- Login attempts (successful and failed) are logged into a `login_attempts` table with timestamp, username, success flag, and IP address.
-- Insertion happens in the `/users/loggedin` route after login is attempted.
-- The audit page displays these attempts in a table format.
-- Use ejs to transform data like timestamps and success flags for better readability.
-
-### Delete functionality
-- Both books, users, and login attempts can be deleted via links in their respective lists, using the `:id` parameter.
-- After deletion, the user is redirected back to the list page to see the updated list.
-- Implemented in the `/books/delete/:id`, `/users/delete/:id`, and `/users/audit/delete/:id` routes.
-- This function is only for debug management and should not be present in a production system without proper access control.
-
-### Validation
-- Basic HTML5 validation is added to forms (e.g., `required` attributes, input types, `min` and `step` for price).
-- Input validation statements are included in routes handlers.
-- Empty search queries are handled by displaying a message.
-
-### Back buttons
-- Added back buttons to relevant pages for better navigation.
-
-### Searching
-- Users can search for books by title, with options for exact or partial matches.
-
-### Authentication middleware
-- A middleware function `redirectLogin` checks if a user is logged in before allowing access to certain routes (list or delete user, audit login records, add or delete books).
-- If not logged in, the user is redirected to the login
-
-### Input sanitization
-- User inputs are sanitized using `express-sanitizer` to prevent XSS attacks.
-- Inputs sanitized include usernames, passwords, first/last names, email addresses, book names, book price, search terms, and IDs.
-
----
-
-## Project structure
+## Project Structure
 ```
 .
-├── create_db.sql
-├── insert_test_data.sql
-├── index.js                # Express bootstrap + router wiring
-├── package.json / package-lock.json
+├── create_db.sql           # Database schema
+├── insert_test_data.sql    # Sample data
+├── setup_db.js             # Database initialization script
+├── index.js                # Express app entry point
+├── package.json
+├── .env                    # Environment variables (not in repo)
+├── middleware/
+│   ├── auth.js             # Authentication middleware
+│   └── validation.js       # Validation error handling
 ├── public/
 │   └── main.css            # Site-wide styling
 ├── routes/
-│   ├── main.js             # root + about pages
-│   ├── books.js            # book catalog CRUD/search routes
-│   └── users.js            # registration, login, audit routes
-├── views/
-│   ├── about.ejs
-│   ├── addbook.ejs
-│   ├── bargainbooks.ejs
-│   ├── book_list.ejs
-│   ├── index.ejs
-│   ├── login.ejs
-│   ├── login_audit.ejs
-│   ├── register.ejs
-│   ├── search.ejs
-│   ├── search_result.ejs
-│   └── user_list.ejs
-└── README.MD
+│   ├── main.js             # Root + about pages
+│   ├── books.js            # Book CRUD/search routes
+│   └── users.js            # User registration, login, audit routes
+└── views/
+    ├── partials/
+    │   ├── header.ejs      # Shared header with login status
+    │   └── footer.ejs      # Shared footer with navigation
+    ├── index.ejs
+    ├── about.ejs
+    ├── register.ejs
+    ├── login.ejs
+    ├── user_list.ejs
+    ├── addbook.ejs
+    ├── book_list.ejs
+    ├── bargainbooks.ejs
+    ├── search.ejs
+    ├── search_result.ejs
+    ├── login_audit.ejs
+    ├── message.ejs         # Generic message template
+    └── validation_errors.ejs
 ```
-
----
 
 ## Routes
 
-**Main router (`routes/main.js`)**
-- `GET /` → renders `index.ejs`
-- `GET /about` → renders `about.ejs`
+### Main (`routes/main.js`)
+- `GET /` - Home page
+- `GET /about` - About page
 
-**Books router (`routes/books.js`)**
-- `GET /books/list` → render `book_list.ejs` with all books
-- `GET /books/addbook` → render `addbook.ejs`
-- `POST /books/bookadded` → insert a new book, respond with confirmation
-- `GET /books/search` → render search form (`search.ejs`)
-- `GET /books/search_result` → run search (exact/partial) and render `search_result.ejs`
-- `GET /books/bargainbooks` → render `bargainbooks.ejs` for books under £20
-- `GET /books/delete/:id` → delete a book then redirect back to the list
+### Books (`routes/books.js`)
+- `GET /books/list` - View all books (protected)
+- `GET /books/addbook` - Add book form (protected)
+- `POST /books/bookadded` - Create new book (protected)
+- `GET /books/search` - Search form
+- `GET /books/search_result` - Search results
+- `GET /books/bargainbooks` - Books under £20
+- `GET /books/delete/:id` - Delete a book (protected)
 
-**Users router (`routes/users.js`)**
-- `GET /users/register` → render `register.ejs`
-- `POST /users/registered` → create a user (hash password, store, confirm)
-- `GET /users/list` → render `user_list.ejs` with all users
-- `GET /users/delete/:id` → delete a user then redirect back to the list
-- `GET /users/login` → render `login.ejs`
-- `POST /users/loggedin` → authenticate user; logs success/failure into `login_attempts`
-- `GET /users/audit` → render `login_audit.ejs` showing recent login attempts
+### Users (`routes/users.js`)
+- `GET /users/register` - Registration form
+- `POST /users/registered` - Create new user
+- `GET /users/login` - Login form
+- `POST /users/loggedin` - Authenticate user
+- `GET /users/logout` - Log out current user (protected)
+- `GET /users/list` - View all users (protected)
+- `GET /users/delete/:id` - Delete a user (protected)
+- `GET /users/audit` - View login attempts (protected)
+- `GET /users/audit/delete/:id` - Delete audit log entry (protected)
+
+**(protected) = Routes requiring authentication**
+
+## Features
+
+### Environment Variables
+- Database credentials managed via `.env` file using `dotenv` package
+- Example: `BB_HOST='localhost'`, `BB_USER='appuser'`, `BB_PASSWORD='app2027'`
+- Access via `process.env.VARIABLE_NAME`
+
+### Authentication & Sessions
+- Session-based authentication using `express-session`
+- Custom `redirectLogin` middleware in `middleware/auth.js`
+- Protected routes redirect to login with return URL
+- Login status displayed in header across all pages
+- Session timeout: 10 minutes (600000ms)
+
+### Login Audit Trail
+- All login attempts logged to `login_attempts` table
+- Tracks: timestamp, username, success/failure, IP address
+- View audit logs at `/users/audit`
+- Delete functionality for debugging
+
+### Routes Protection
+- Book management (list, add, delete) - Prevent unauthorized inventory changes
+- User management (list, delete) - Protect sensitive user data
+- Audit logs (view, delete) - Maintain log integrity
+- Logout - Prevent session manipulation
+
+### Input Validation & Sanitization
+
+**Strategy:**
+- Frontend: HTML5 validation (`required`, `type="email"`, `min`/`step`)
+- Backend: `express-validator` for type checking, format validation, length limits
+- Sanitization: `express-sanitizer` for user-visible text fields only
+- Database: Parameterized queries prevent SQL injection
+- Passwords: Hashed with bcrypt (10 rounds)
+
+**Sanitized Fields (XSS Protection):**
+- Registration: `username`, `first_name`, `last_name`
+- Login: `username`
+- Add Book: `name`
+- Search: `search_text`
+
+**NOT Sanitized (validated differently):**
+- Passwords (hashed immediately)
+- Emails (validated with `.isEmail()`)
+- Numbers (validated as float/int, parsed)
+- Enums (whitelist validation)
+
+### Search Functionality
+- Search books by title
+- Two modes: exact match or partial match
+- Results displayed with book details
+
+### Delete Functionality
+- Books, users, and audit logs can be deleted
+- Implemented for debugging purposes only
+- Requires authentication
+- Not production-ready without proper access control

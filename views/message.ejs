@@ -1,0 +1,13 @@
+<%- include('partials/header', { pageTitle: typeof title !=='undefined' ? title : shopData.shopName }) %>
+
+    <h2>
+        <%= typeof title !=='undefined' ? title : 'Message' %>
+    </h2>
+    <p>
+        <%= message %>
+    </p>
+    <% if (typeof backLink !=='undefined' && backLink) { %>
+        <p><a href="<%= backLink %>">Back</a></p>
+        <% } %>
+
+            <%- include('partials/footer') %>

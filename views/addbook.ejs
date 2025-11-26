@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', { pageTitle: 'Add Books - ' + shopData.shopName }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Books to <%= shopData.shopName %>
-    </title>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-    <h1>
-        <%= shopData.shopName %>: Add book
-    </h1>
+    <h2>Add a New Book</h2>
     <!-- Form to add a new book -->
     <form method="POST" action="/books/bookadded">
         <p>Book Name: <input id="name" type="text" name="name" required /></p>
@@ -21,6 +9,5 @@
     </form>
     <br>
     <a href="/">Back</a>
-</body>
 
-</html>
+    <%- include('partials/footer') %>

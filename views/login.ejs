@@ -1,23 +1,18 @@
-<!doctype html>
-<html>
+<%- include('partials/header', { pageTitle: 'Login - ' + shopData.shopName }) %>
 
-<head>
-  <title>Login for <%=shopData.shopName%>
-  </title>
-  <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
+  <h2>Login</h2>
+  <% if (message) { %>
+    <p><strong>
+        <%= message %>
+      </strong></p>
+    <% } %>
+      <!-- Form to register a new user -->
+      <form method="POST" action="loggedin">
+        <p>User name: <input id="username" type="text" name="username" required /></p>
+        <p>Password: <input id="password" type="password" name="password" required /></p>
+        <input type="submit" value="Login" />
+      </form>
+      <br>
+      <a href="/">Back</a>
 
-<body>
-  <h1>Login for <%=shopData.shopName%>
-  </h1>
-  <!-- Form to register a new user -->
-  <form method="POST" action="loggedin">
-    <p>User name: <input id="username" type="text" name="username" required /></p>
-    <p>Password: <input id="password" type="password" name="password" required /></p>
-    <input type="submit" value="Login" />
-  </form>
-  <br>
-  <a href="/">Back</a>
-</body>
-
-</html>
+      <%- include('partials/footer') %>

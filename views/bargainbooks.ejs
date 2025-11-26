@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', { pageTitle: 'Bargain Books - ' + shopData.shopName }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Bargain Books in <%=shopData.shopName%>
-    </title>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-    <h1>
-        <%=shopData.shopName%> Shop
-    </h1>
     <h2>Here are the books on bargain offer (price less than £20):</h2>
     <!-- List of bargain books -->
     <ul>
@@ -24,6 +10,5 @@
             <% }); %>
     </ul>
     <a href="/">Back</a>
-</body>
 
-</html>
+    <%- include('partials/footer') %>

@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('partials/header', { pageTitle: 'Books in ' + shopData.shopName }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Books in <%=shopData.shopName%>
-    </title>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-    <h1>
-        <%=shopData.shopName%> Shop
-    </h1>
     <h2>Here are the books that we sell:</h2>
     <!-- List of available books -->
     <ul>
@@ -24,6 +10,5 @@
             <% }); %>
     </ul>
     <a href="/">Back</a>
-</body>
 
-</html>
+    <%- include('partials/footer') %>

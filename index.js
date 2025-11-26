@@ -40,6 +40,12 @@ app.use(session({
     }
 }))
 
+// Make session available to all templates
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
+
 // 
 const db = mysql.createPool({
     host: process.env.BB_HOST || 'localhost',

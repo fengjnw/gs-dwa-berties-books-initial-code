@@ -1,15 +1,6 @@
-<!doctype html>
-<html>
+<%- include('partials/header', { pageTitle: 'Search - ' + shopData.shopName }) %>
 
-<head>
-  <title>Search <%=shopData.shopName%>
-  </title>
-  <link rel="stylesheet" type="text/css" href="/main.css" />
-</head>
-
-<body>
-  <h1>Search <%=shopData.shopName%>
-  </h1>
+  <h2>Search for Books</h2>
   <!-- Form to search for books -->
   <form action="/books/search_result" method="GET">
     <p>What book do you want?</p>
@@ -26,6 +17,5 @@
   </form>
   <br>
   <a href="/">Back</a>
-</body>
 
-</html>
+  <%- include('partials/footer') %>

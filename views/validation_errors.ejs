@@ -1,0 +1,18 @@
+<%- include('partials/header', { pageTitle: typeof title !=='undefined' ? title : 'Validation Error' }) %>
+
+    <h2>
+        <%= typeof title !=='undefined' ? title : 'Validation Failed' %>
+    </h2>
+    <p>Please fix the following errors:</p>
+    <ul>
+        <% errors.forEach(err=> { %>
+            <li><strong>
+                    <%= err.path %>:
+                </strong>
+                <%= err.msg || 'Invalid input' %>
+            </li>
+            <% }); %>
+    </ul>
+    <p><a href="<%= backLink %>">Back</a></p>
+
+    <%- include('partials/footer') %>
