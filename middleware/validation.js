@@ -6,11 +6,12 @@ const handleValidationErrors = (backUrl, title = 'Validation Failed') => {
     return (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
+            const basePath = res.locals.basePath || '';
             // Render validation errors template with 400 Bad Request
             res.status(400).render('validation_errors', {
                 title: title,
                 errors: errors.array(),
-                backLink: backUrl
+                backLink: basePath + backUrl
             });
             return;
         }

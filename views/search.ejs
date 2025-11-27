@@ -2,7 +2,7 @@
 
   <h2>Search for Books</h2>
   <!-- Form to search for books -->
-  <form action="/books/search_result" method="GET">
+  <form action="<%= basePath %>/books/search_result" method="GET">
     <p>What book do you want?</p>
     <input id="search-box" type="text" name="search_text">
     <br>
@@ -16,6 +16,6 @@
     <input type="submit" value="Search">
   </form>
   <br>
-  <a href="/">Back</a>
+  <a href="<%= basePath %>/">Back</a>
 
   <%- include('partials/footer') %>

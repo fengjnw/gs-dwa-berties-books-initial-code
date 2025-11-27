@@ -30,6 +30,7 @@ router.post('/registered', redirectIfLoggedIn, [
     const first = req.sanitize(req.body.first);
     const last = req.sanitize(req.body.last);
     const email = req.body.email;
+    const basePath = res.locals.basePath || '';
     let sqlquery = "SELECT * FROM users WHERE username = ?";
     // execute sql query to check if username already exists
     db.query(sqlquery, [username], (err, result) => {
@@ -40,7 +41,7 @@ router.post('/registered', redirectIfLoggedIn, [
             res.render('message', {
                 title: 'Registration Failed',
                 message: 'Username already exists. Please choose a different username.',
-                backLink: '/users/register'
+                backLink: basePath + '/users/register'
             });
             return;
         }
@@ -53,7 +54,7 @@ router.post('/registered', redirectIfLoggedIn, [
                 res.render('message', {
                     title: 'Registration Failed',
                     message: 'Error hashing password.',
-                    backLink: '/users/register'
+                    backLink: basePath + '/users/register'
                 });
                 return;
             }
@@ -68,7 +69,7 @@ router.post('/registered', redirectIfLoggedIn, [
                     res.render('message', {
                         title: 'Registration Successful',
                         message: `Hello ${first} ${last}, you are now registered! We will send an email to you at ${email}.`,
-                        backLink: '/'
+                        backLink: basePath + '/'
                     });
                 }
             });
@@ -87,10 +88,11 @@ router.get('/list', redirectLogin, function (req, res, next) {
         }
         // if no books found, inform the user
         if (result.length === 0) {
+            const basePath = res.locals.basePath || '';
             res.render('message', {
                 title: 'No Users',
                 message: 'No users registered yet.',
-                backLink: '/'
+                backLink: basePath + '/'
             });
             return;
         }
@@ -103,8 +105,9 @@ router.post('/delete/:id', redirectLogin, [
     check('id').isInt({ min: 1 }).withMessage('Invalid user ID. Must be a positive integer')
 ], function (req, res, next) {
     const errors = validationResult(req);
+    const basePath = res.locals.basePath || '';
     if (!errors.isEmpty()) {
-        return res.redirect('/users/list');
+        return res.redirect(basePath + '/users/list');
     }
     const userId = parseInt(req.params.id, 10);
     let sqlquery = "DELETE FROM users WHERE id = ?";
@@ -112,7 +115,7 @@ router.post('/delete/:id', redirectLogin, [
         if (err) {
             next(err);
         } else {
-            res.redirect('/users/list');
+            res.redirect(basePath + '/users/list');
         }
     });
 });
@@ -132,6 +135,7 @@ router.post('/loggedin', redirectIfLoggedIn, [
 ], handleValidationErrors('/users/login', 'Login Failed'), function (req, res, next) {
     const username = req.sanitize(req.body.username);
     const password = req.body.password;
+    const basePath = res.locals.basePath || '';
     // log the login attempt
     let logQuery = "INSERT INTO login_attempts (username, success, ip_address, reason) VALUES (?, ?, ?, ?)";
     // retrieve user from database
@@ -146,7 +150,7 @@ router.post('/loggedin', redirectIfLoggedIn, [
             res.render('message', {
                 title: 'Login Failed',
                 message: 'User not found.',
-                backLink: '/users/login'
+                backLink: basePath + '/users/login'
             });
             return;
         }
@@ -161,7 +165,7 @@ router.post('/loggedin', redirectIfLoggedIn, [
                 req.session.userId = username;
                 db.query(logQuery, [username, true, req.ip, 'Login successful']);
                 // Redirect to the page user wanted to visit, or home page
-                const returnTo = req.session.returnTo || '/';
+                const returnTo = req.session.returnTo || basePath + '/';
                 delete req.session.returnTo; // clean up
                 delete req.session.loginMessage; // clean up message
                 // Show success message and redirect after 2 seconds
@@ -174,7 +178,7 @@ router.post('/loggedin', redirectIfLoggedIn, [
                 res.render('message', {
                     title: 'Login Failed',
                     message: 'Incorrect password.',
-                    backLink: '/users/login'
+                    backLink: basePath + '/users/login'
                 });
             }
         });
@@ -182,14 +186,15 @@ router.post('/loggedin', redirectIfLoggedIn, [
 });
 
 router.get('/logout', redirectLogin, (req, res) => {
+    const basePath = res.locals.basePath || '';
     req.session.destroy(err => {
         if (err) {
-            return res.redirect('/')
+            return res.redirect(basePath + '/')
         }
         res.render('message', {
             title: 'Logged Out',
             message: 'You are now logged out.',
-            backLink: '/'
+            backLink: basePath + '/'
         });
     })
 })
@@ -205,10 +210,11 @@ router.get('/audit', redirectLogin, function (req, res, next) {
         }
         // if no records found, inform the user
         if (!result || result.length === 0) {
+            const basePath = res.locals.basePath || '';
             res.render('message', {
                 title: 'No Login Attempts',
                 message: 'No login attempts recorded.',
-                backLink: '/'
+                backLink: basePath + '/'
             });
             return;
         }
@@ -221,8 +227,9 @@ router.post('/audit/delete/:id', redirectLogin, [
     check('id').isInt({ min: 1 }).withMessage('Invalid attempt ID. Must be a positive integer')
 ], function (req, res, next) {
     const errors = validationResult(req);
+    const basePath = res.locals.basePath || '';
     if (!errors.isEmpty()) {
-        return res.redirect('/users/audit');
+        return res.redirect(basePath + '/users/audit');
     }
     const attemptId = parseInt(req.params.id, 10);
     let sqlquery = "DELETE FROM login_attempts WHERE id = ?";
@@ -230,7 +237,7 @@ router.post('/audit/delete/:id', redirectLogin, [
         if (err) {
             next(err);
         } else {
-            res.redirect('/users/audit');
+            res.redirect(basePath + '/users/audit');
         }
     });
 });

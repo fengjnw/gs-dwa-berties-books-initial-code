@@ -32,7 +32,7 @@ app.locals.shopData = { shopName: "Bertie's Books" }
 
 // Set up the session middleware
 app.use(session({
-    secret: 'somerandomstuff',
+    secret: process.env.SESSION_SECRET || 'somerandomstuff',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -47,6 +47,14 @@ app.use(session({
 // Make session available to all templates
 app.use((req, res, next) => {
     res.locals.session = req.session;
+    next();
+});
+
+// Inject base path for cloud deployment (set via environment variable)
+// On cloud server: set BASE_PATH=/usr/347
+// On local: leave empty or set to empty string
+app.use((req, res, next) => {
+    res.locals.basePath = process.env.BASE_PATH || '';
     next();
 });
 

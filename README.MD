@@ -5,7 +5,19 @@ Sample code for Dynamic Web Applications module using Node.js, Express, and EJS.
 ## Installation and Setup
 
 ```bash
+# Install dependencies
 npm install
+
+# Create your .env file from the example
+cp .env.example .env
+
+# Edit .env and set your database credentials and session secret
+
+# Set up the database (create user and grant permissions first in MySQL)
+mysql -u root -p < create_db.sql
+mysql -u root -p < insert_test_data.sql
+
+# Then run the app
 node index.js
 ```
 

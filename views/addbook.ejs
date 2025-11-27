@@ -2,12 +2,12 @@
 
     <h2>Add a New Book</h2>
     <!-- Form to add a new book -->
-    <form method="POST" action="/books/bookadded">
+    <form method="POST" action="<%= basePath %>/books/bookadded">
         <p>Book Name: <input id="name" type="text" name="name" required /></p>
         <p>Book Price: <input id="price" type="number" min="0" step="0.01" name="price" required /></p>
         <input type="submit" value="Add Book" />
     </form>
     <br>
-    <a href="/">Back</a>
+    <a href="<%= basePath %>/">Back</a>
 
     <%- include('partials/footer') %>

@@ -5,21 +5,8 @@
     <meta charset="UTF-8">
     <title>Login Successful - <%= shopData.shopName %>
     </title>
-    <script>
-        // Use JavaScript redirect to handle base path correctly
-        setTimeout(function () {
-            // Get the base path from current location
-            var basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/users/loggedin'));
-            var redirectPath = '<%= redirectUrl %>';
-            // If redirectPath starts with /, it's absolute from app root
-            if (redirectPath.startsWith('/')) {
-                window.location.href = basePath + redirectPath;
-            } else {
-                window.location.href = redirectPath;
-            }
-        }, 2000);
-    </script>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <meta http-equiv="refresh" content="2;url=<%= redirectUrl %>" />
+    <link rel="stylesheet" type="text/css" href="<%= basePath %>/main.css" />
 </head>
 
 <body>

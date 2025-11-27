@@ -32,8 +32,8 @@
                         <%= new Date(attempt.timestamp).toLocaleString('en-GB') %>
                     </td>
                     <td>
-                        <form method="post" action="/users/audit/delete/<%= attempt.id %>" style="display:inline"
-                            onsubmit="return confirm('Delete this audit record?');">
+                        <form method="post" action="<%= basePath %>/users/audit/delete/<%= attempt.id %>"
+                            style="display:inline" onsubmit="return confirm('Delete this audit record?');">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
@@ -41,6 +41,6 @@
                 <% }); %>
         </tbody>
     </table>
-    <a href="/">Back</a>
+    <a href="<%= basePath %>/">Back</a>
 
     <%- include('partials/footer') %>

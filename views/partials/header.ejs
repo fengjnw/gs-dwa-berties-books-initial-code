@@ -5,7 +5,7 @@
     <title>
         <%= typeof pageTitle !=='undefined' ? pageTitle : shopData.shopName %>
     </title>
-    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <link rel="stylesheet" type="text/css" href="<%= basePath %>/main.css" />
 </head>
 
 <body>
@@ -16,9 +16,10 @@
         <% if (typeof session !=='undefined' && session.userId) { %>
             Logged in as: <strong>
                 <%= session.userId %>
-            </strong> | <a href="/users/logout">Logout</a>
+            </strong> | <a href="<%= basePath %>/users/logout">Logout</a>
             <% } else { %>
-                Not logged in | <a href="/users/login">Login</a> | <a href="/users/register">Register</a>
+                Not logged in | <a href="<%= basePath %>/users/login">Login</a> | <a
+                    href="<%= basePath %>/users/register">Register</a>
                 <% } %>
     </p>
     <hr>
