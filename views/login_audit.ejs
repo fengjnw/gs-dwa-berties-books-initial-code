@@ -32,7 +32,10 @@
                         <%= new Date(attempt.timestamp).toLocaleString('en-GB') %>
                     </td>
                     <td>
-                        <a href="/users/audit/delete/<%= attempt.id %>">Delete</a>
+                        <form method="post" action="/users/audit/delete/<%= attempt.id %>" style="display:inline"
+                            onsubmit="return confirm('Delete this audit record?');">
+                            <button type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <% }); %>

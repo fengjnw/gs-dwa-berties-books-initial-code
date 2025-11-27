@@ -98,16 +98,21 @@ router.get('/list', redirectLogin, function (req, res, next) {
     });
 });
 
-// Handle delete user request
-router.get('/delete/:id', redirectLogin, function (req, res, next) {
-    let userId = req.params.id;
-    let sqlquery = "DELETE FROM users WHERE id = ?"; // query database to delete the user with the specified id
-    // execute sql query
-    db.query(sqlquery, [userId], (err, result) => {
+// Handle delete user request (POST)
+router.post('/delete/:id', redirectLogin, [
+    check('id').isInt({ min: 1 }).withMessage('Invalid user ID. Must be a positive integer')
+], function (req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.redirect('/users/list');
+    }
+    const userId = parseInt(req.params.id, 10);
+    let sqlquery = "DELETE FROM users WHERE id = ?";
+    db.query(sqlquery, [userId], (err) => {
         if (err) {
-            next(err)
+            next(err);
         } else {
-            res.redirect('../list');
+            res.redirect('/users/list');
         }
     });
 });
@@ -223,16 +228,21 @@ router.get('/audit', redirectLogin, function (req, res, next) {
     });
 });
 
-// Handle delete login attempt request
-router.get('/audit/delete/:id', redirectLogin, function (req, res, next) {
-    let attemptId = req.sanitize(req.params.id);
-    let sqlquery = "DELETE FROM login_attempts WHERE id = ?"; // query database to delete the login attempt with the specified id
-    // execute sql query
-    db.query(sqlquery, [attemptId], (err, result) => {
+// Handle delete login attempt request (POST)
+router.post('/audit/delete/:id', redirectLogin, [
+    check('id').isInt({ min: 1 }).withMessage('Invalid attempt ID. Must be a positive integer')
+], function (req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.redirect('/users/audit');
+    }
+    const attemptId = parseInt(req.params.id, 10);
+    let sqlquery = "DELETE FROM login_attempts WHERE id = ?";
+    db.query(sqlquery, [attemptId], (err) => {
         if (err) {
-            next(err)
+            next(err);
         } else {
-            res.redirect('../../audit');
+            res.redirect('/users/audit');
         }
     });
 });

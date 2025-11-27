@@ -51,7 +51,7 @@ router.get('/search_result', [
 });
 
 // Handle list books request
-router.get('/list', redirectLogin, function (req, res, next) {
+router.get('/list', function (req, res, next) {
     let sqlquery = "SELECT * FROM books"; // query database to get all the books
     // execute sql query
     db.query(sqlquery, (err, result) => {
@@ -128,22 +128,21 @@ router.get('/bargainbooks', function (req, res, next) {
     });
 });
 
-// Handle delete book request
-router.get('/delete/:id', redirectLogin, [
+// Handle delete book request (POST instead of GET to avoid unintended deletions)
+router.post('/delete/:id', redirectLogin, [
     check('id').isInt({ min: 1 }).withMessage('Invalid book ID. Must be a positive integer')
 ], function (req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.redirect('../list');
+        return res.redirect('/books/list');
     }
-    const bookId = parseInt(req.params.id);
+    const bookId = parseInt(req.params.id, 10);
     let sqlquery = "DELETE FROM books WHERE id = ?"; // query database to delete the book with the specified id
-    // execute sql query
-    db.query(sqlquery, [bookId], (err, result) => {
+    db.query(sqlquery, [bookId], (err) => {
         if (err) {
-            next(err)
+            next(err);
         } else {
-            res.redirect('../list');
+            res.redirect('/books/list');
         }
     });
 });

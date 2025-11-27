@@ -5,7 +5,11 @@
     <ul>
         <% availableBooks.forEach(book=> { %>
             <li>
-                <%= book.name %>, £<%= book.price %> <a href="/books/delete/<%= book.id %>">Delete</a>
+                <%= book.name %>, £<%= book.price %>
+                        <form method="post" action="/books/delete/<%= book.id %>" style="display:inline"
+                            onsubmit="return confirm('Delete this book?');">
+                            <button type="submit">Delete</button>
+                        </form>
             </li>
             <% }); %>
     </ul>

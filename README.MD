@@ -53,7 +53,7 @@ node index.js
 - `GET /about` - About page
 
 ### Books (`routes/books.js`)
-- `GET /books/list` - View all books (protected)
+- `GET /books/list` - View all books
 - `GET /books/addbook` - Add book form (protected)
 - `POST /books/bookadded` - Create new book (protected)
 - `GET /books/search` - Search form
@@ -76,10 +76,31 @@ node index.js
 
 ## Features
 
-### Environment Variables
-- Database credentials managed via `.env` file using `dotenv` package
-- Example: `BB_HOST='localhost'`, `BB_USER='appuser'`, `BB_PASSWORD='app2027'`
-- Access via `process.env.VARIABLE_NAME`
+### Routes Protection
+- Book management (add, delete) - Prevent unauthorized inventory changes
+- User management (list, delete) - Protect sensitive user data
+- Audit logs (view, delete) - Maintain log integrity
+- Logout - Prevent session manipulation
+
+### Input Validation & Sanitization
+
+- Strategy
+    - Frontend: HTML5 validation (`required`, `type="email"`, `min`/`step`)
+    - Backend: `express-validator` for type checking, format validation, length limits
+    - Sanitization: `express-sanitizer` for user-visible text fields only
+    - Database: Parameterized queries prevent SQL injection
+
+- Sanitized Fields (XSS Protection)
+    - Registration: `username`, `first_name`, `last_name`
+    - Login: `username`
+    - Add Book: `name`
+    - Search: `search_text`
+
+- NOT Sanitized (validated differently)
+    - Passwords (hashed immediately)
+    - Emails (validated with `.isEmail()`)
+    - Numbers (validated as float/int, parsed)
+    - Enums (whitelist validation)
 
 ### Authentication & Sessions
 - Session-based authentication using `express-session`
@@ -88,38 +109,16 @@ node index.js
 - Login status displayed in header across all pages
 - Session timeout: 10 minutes (600000ms)
 
+### Environment Variables
+- Database credentials managed via `.env` file using `dotenv` package
+- Example: `BB_HOST='localhost'`, `BB_USER='appuser'`, `BB_PASSWORD='app2027'`
+- Access via `process.env.VARIABLE_NAME`
+
 ### Login Audit Trail
 - All login attempts logged to `login_attempts` table
 - Tracks: timestamp, username, success/failure, IP address
 - View audit logs at `/users/audit`
 - Delete functionality for debugging
-
-### Routes Protection
-- Book management (list, add, delete) - Prevent unauthorized inventory changes
-- User management (list, delete) - Protect sensitive user data
-- Audit logs (view, delete) - Maintain log integrity
-- Logout - Prevent session manipulation
-
-### Input Validation & Sanitization
-
-**Strategy:**
-- Frontend: HTML5 validation (`required`, `type="email"`, `min`/`step`)
-- Backend: `express-validator` for type checking, format validation, length limits
-- Sanitization: `express-sanitizer` for user-visible text fields only
-- Database: Parameterized queries prevent SQL injection
-- Passwords: Hashed with bcrypt (10 rounds)
-
-**Sanitized Fields (XSS Protection):**
-- Registration: `username`, `first_name`, `last_name`
-- Login: `username`
-- Add Book: `name`
-- Search: `search_text`
-
-**NOT Sanitized (validated differently):**
-- Passwords (hashed immediately)
-- Emails (validated with `.isEmail()`)
-- Numbers (validated as float/int, parsed)
-- Enums (whitelist validation)
 
 ### Search Functionality
 - Search books by title
@@ -130,4 +129,4 @@ node index.js
 - Books, users, and audit logs can be deleted
 - Implemented for debugging purposes only
 - Requires authentication
-- Not production-ready without proper access control
+- Need confirmation prompt before deletion

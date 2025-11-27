@@ -6,8 +6,11 @@
         <% users.forEach(user=> { %>
             <li>
                 <%= user.username %> - <%= user.first_name %>
-                        <%= user.last_name %>, Email: <%= user.email %> <a
-                                    href="/users/delete/<%= user.id %>">Delete</a>
+                        <%= user.last_name %>, Email: <%= user.email %>
+                                <form method="post" action="/users/delete/<%= user.id %>" style="display:inline"
+                                    onsubmit="return confirm('Delete this user?');">
+                                    <button type="submit">Delete</button>
+                                </form>
             </li>
             <% }); %>
     </ul>
