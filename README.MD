@@ -98,7 +98,7 @@ node index.js
 
 ### Input Validation & Sanitization
 
-**Strategy:**
+**Strategy**
 - Frontend: HTML5 validation (`required`, `type="email"`, `min`/`step`)
 - Backend: `express-validator` for type checking, format validation, length limits
 - Sanitization: `express-sanitizer` for user-visible text fields only
@@ -106,7 +106,7 @@ node index.js
 - Passwords: Hashed with bcrypt (10 rounds)
 - Error Handling: Validation failures return HTTP 400 with detailed error messages
 
-**Validated Fields (with Backend Validation):**
+**Validated Fields (with Backend Validation)**
 
 Registration (`/users/registered`)
 - `username` - Required, 1-20 characters, alphanumeric only
@@ -130,19 +130,19 @@ Search Books (`/books/search_result`)
 Delete Operations
 - `id` (book/user/audit) - Integer >= 1
 
-**NOT Validated:**
+**NOT Validated**
 - GET requests with no parameters (list views, static pages) - No user input to validate
 - Logout - No form data; only destroys session
-- Already validated in databas* - IDs retrieved from database queries are trusted
+- Already validated in database - IDs retrieved from database queries are trusted
 - Session data (`userId`) - Already validated during login, stored server-side
 
-**Sanitized Fields (XSS Protection):**
+**Sanitized Fields (XSS Protection)**
 - Registration: `username`, `first_name`, `last_name`
 - Login: `username`
 - Add Book: `name`
 - Search: `search_text`
 
-**NOT Sanitized (validated differently):**
+**NOT Sanitized (validated differently)**
 - Passwords (hashed immediately, never displayed)
 - Emails (validated with `.isEmail()`, not rendered as HTML)
 - Numbers (validated as float/int, parsed to number type)
@@ -159,7 +159,7 @@ Delete Operations
 
 ### Environment Variables
 - Database credentials managed via `.env` file using `dotenv` package
-- Example: `BB_HOST='localhost'`, `BB_USER='appuser'`, `BB_PASSWORD='app2027'`
+- Example: `BB_HOST='localhost'`, `BB_USER='app_user'`, `BB_PASSWORD='app_2027'`
 - Access via `process.env.VARIABLE_NAME`
 
 ### Login Audit Trail
