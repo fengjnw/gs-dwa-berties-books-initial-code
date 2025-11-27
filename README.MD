@@ -54,26 +54,23 @@ node index.js
 
 ### Books (`routes/books.js`)
 - `GET /books/list` - View all books
-- `GET /books/addbook` - Add book form (protected)
-- `POST /books/bookadded` - Create new book (protected)
+- `GET /books/addbook` - Add book form (requires login)
+- `POST /books/bookadded` - Create new book (requires login)
 - `GET /books/search` - Search form
 - `GET /books/search_result` - Search results
 - `GET /books/bargainbooks` - Books under £20
-- `GET /books/delete/:id` - Delete a book (protected)
+- `GET /books/delete/:id` - Delete a book (requires login)
 
 ### Users (`routes/users.js`)
-- `GET /users/register` - Registration form
-- `POST /users/registered` - Create new user
-- `GET /users/login` - Login form
-- `POST /users/loggedin` - Authenticate user
-- `GET /users/logout` - Log out current user (protected)
-- `GET /users/list` - View all users (protected)
-- `GET /users/delete/:id` - Delete a user (protected)
-- `GET /users/audit` - View login attempts (protected)
-- `GET /users/audit/delete/:id` - Delete audit log entry (protected)
-
-**(protected) = Routes requiring authentication**
-
+- `GET /users/register` - Registration form (redirects if already logged in)
+- `POST /users/registered` - Create new user (redirects if already logged in)
+- `GET /users/login` - Login form (redirects if already logged in)
+- `POST /users/loggedin` - Authenticate user (redirects if already logged in)
+- `GET /users/logout` - Log out current user (requires login)
+- `GET /users/list` - View all users (requires login)
+- `GET /users/delete/:id` - Delete a user (requires login)
+- `GET /users/audit` - View login attempts (requires login)
+- `GET /users/audit/delete/:id` - Delete audit log entry (requires login)
 ## Features
 
 ### Routes Protection
