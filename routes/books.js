@@ -102,8 +102,13 @@ router.post('/bookadded', redirectLogin, [
         if (err) {
             next(err)
         }
-        else
-            res.send(' This book is added to database, name: ' + name + ' price ' + priceFloat + '<br>' + '<a href="/books/addbook">Add another book</a>');
+        else {
+            res.render('message', {
+                title: 'Book Added',
+                message: `Book "${name}" has been added successfully with price £${priceFloat.toFixed(2)}.`,
+                backLink: '/books/addbook'
+            });
+        }
     })
 });
 

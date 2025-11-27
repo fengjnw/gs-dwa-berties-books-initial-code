@@ -165,22 +165,10 @@ router.post('/loggedin', redirectIfLoggedIn, [
                 delete req.session.returnTo; // clean up
                 delete req.session.loginMessage; // clean up message
                 // Show success message and redirect after 2 seconds
-                res.send(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Login Successful</title>
-                        <meta http-equiv="refresh" content="2;url=${returnTo}">
-                        <link rel="stylesheet" type="text/css" href="/main.css" />
-                    </head>
-                    <body>
-                        <h1>Login Successful!</h1>
-                        <p>Welcome back, ${username}!</p>
-                        <p>Redirecting you back in 2 seconds...</p>
-                        <p>If not redirected, <a href="${returnTo}">click here</a>.</p>
-                    </body>
-                    </html>
-                `);
+                res.render('login_success', {
+                    username: username,
+                    redirectUrl: returnTo
+                });
             } else {
                 db.query(logQuery, [username, false, req.ip, 'Incorrect password']);
                 res.render('message', {
