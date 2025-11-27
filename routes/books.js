@@ -39,11 +39,10 @@ router.get('/search_result', [
         }
         // if no books found, inform the user
         if (result.length === 0) {
-            const basePath = res.locals.basePath || '';
             res.render('message', {
                 title: 'No Books Found',
                 message: 'No books found matching your search.',
-                backLink: basePath + '/books/search'
+                backLink: '/books/search'
             });
             return;
         }
@@ -61,11 +60,10 @@ router.get('/list', function (req, res, next) {
         }
         // if no books found, inform the user
         if (result.length === 0) {
-            const basePath = res.locals.basePath || '';
             res.render('message', {
                 title: 'No Books',
                 message: 'No books available for now.',
-                backLink: basePath + '/'
+                backLink: '/'
             });
             return;
         }
@@ -88,12 +86,11 @@ router.post('/bookadded', redirectLogin, [
     const name = req.sanitize(req.body.name);
     const price = req.body.price; // Already validated as float
     const priceFloat = parseFloat(price);
-    const basePath = res.locals.basePath || '';
     if (!Number.isFinite(priceFloat) || priceFloat < 0) {
         res.render('message', {
             title: 'Add Book Failed',
             message: 'Please enter a non-negative price for the book.',
-            backLink: basePath + '/books/addbook'
+            backLink: '/books/addbook'
         });
         return;
     }
@@ -109,7 +106,7 @@ router.post('/bookadded', redirectLogin, [
             res.render('message', {
                 title: 'Book Added',
                 message: `Book "${name}" has been added successfully with price £${priceFloat.toFixed(2)}.`,
-                backLink: basePath + '/books/addbook'
+                backLink: '/books/addbook'
             });
         }
     })
@@ -125,11 +122,10 @@ router.get('/bargainbooks', function (req, res, next) {
         }
         // if no books found, inform the user
         if (result.length === 0) {
-            const basePath = res.locals.basePath || '';
             res.render('message', {
                 title: 'No Bargain Books',
                 message: 'No books on bargain offer for now.',
-                backLink: basePath + '/'
+                backLink: '/'
             });
             return;
         }
@@ -142,9 +138,8 @@ router.post('/delete/:id', redirectLogin, [
     check('id').isInt({ min: 1 }).withMessage('Invalid book ID. Must be a positive integer')
 ], function (req, res, next) {
     const errors = validationResult(req);
-    const basePath = res.locals.basePath || '';
     if (!errors.isEmpty()) {
-        return res.redirect(basePath + '/books/list');
+        return res.redirect('/books/list');
     }
     const bookId = parseInt(req.params.id, 10);
     let sqlquery = "DELETE FROM books WHERE id = ?"; // query database to delete the book with the specified id
@@ -152,7 +147,7 @@ router.post('/delete/:id', redirectLogin, [
         if (err) {
             next(err);
         } else {
-            res.redirect(basePath + '/books/list');
+            res.redirect('/books/list');
         }
     });
 });

@@ -7,12 +7,12 @@
       </strong></p>
     <% } %>
       <!-- Form to register a new user -->
-      <form method="POST" action="<%= basePath %>/users/loggedin">
+      <form method="POST" action="/users/loggedin">
         <p>User name: <input id="username" type="text" name="username" required /></p>
         <p>Password: <input id="password" type="password" name="password" required /></p>
         <input type="submit" value="Login" />
       </form>
       <br>
-      <a href="<%= basePath %>/">Back</a>
+      <a href="/">Back</a>
 
       <%- include('partials/footer') %>

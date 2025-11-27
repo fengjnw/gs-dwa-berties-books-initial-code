@@ -6,13 +6,13 @@
         <% availableBooks.forEach(book=> { %>
             <li>
                 <%= book.name %>, £<%= book.price %>
-                        <form method="post" action="<%= basePath %>/books/delete/<%= book.id %>" style="display:inline"
+                        <form method="post" action="/books/delete/<%= book.id %>" style="display:inline"
                             onsubmit="return confirm('Delete this book?');">
                             <button type="submit">Delete</button>
                         </form>
             </li>
             <% }); %>
     </ul>
-    <a href="<%= basePath %>/">Back</a>
+    <a href="/">Back</a>
 
     <%- include('partials/footer') %>

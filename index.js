@@ -55,6 +55,17 @@ app.use((req, res, next) => {
 // On local: leave empty or set to empty string
 app.use((req, res, next) => {
     res.locals.basePath = process.env.BASE_PATH || '';
+
+    // Override res.redirect to automatically prepend basePath for absolute paths
+    const originalRedirect = res.redirect.bind(res);
+    res.redirect = function (url) {
+        // If url starts with /, prepend basePath
+        if (typeof url === 'string' && url.startsWith('/')) {
+            url = res.locals.basePath + url;
+        }
+        return originalRedirect(url);
+    };
+
     next();
 });
 
