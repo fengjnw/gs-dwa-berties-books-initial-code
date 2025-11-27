@@ -44,9 +44,9 @@ app.use(session({
     }
 }))
 
-// Make session available to all templates
+// Make session available to all templates (never null)
 app.use((req, res, next) => {
-    res.locals.session = req.session;
+    res.locals.session = req.session || {};
     next();
 });
 

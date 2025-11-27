@@ -187,6 +187,8 @@ router.get('/logout', redirectLogin, (req, res) => {
         if (err) {
             return res.redirect('/')
         }
+        // Ensure templates no longer see a logged-in session for this response
+        res.locals.session = {};
         res.render('message', {
             title: 'Logged Out',
             message: 'You are now logged out.',
