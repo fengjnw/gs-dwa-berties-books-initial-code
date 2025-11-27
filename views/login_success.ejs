@@ -5,7 +5,20 @@
     <meta charset="UTF-8">
     <title>Login Successful - <%= shopData.shopName %>
     </title>
-    <meta http-equiv="refresh" content="2;url=<%= encodeURI(redirectUrl) %>">
+    <script>
+        // Use JavaScript redirect to handle base path correctly
+        setTimeout(function () {
+            // Get the base path from current location
+            var basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/users/loggedin'));
+            var redirectPath = '<%= redirectUrl %>';
+            // If redirectPath starts with /, it's absolute from app root
+            if (redirectPath.startsWith('/')) {
+                window.location.href = basePath + redirectPath;
+            } else {
+                window.location.href = redirectPath;
+            }
+        }, 2000);
+    </script>
     <link rel="stylesheet" type="text/css" href="/main.css" />
 </head>
 
@@ -15,7 +28,9 @@
             <%= username %>
         </strong>!</p>
     <p>Redirecting you back in 2 seconds...</p>
-    <p>If not redirected, <a href="<%= redirectUrl %>">click here</a>.</p>
+    <p>If not redirected, <a href="#"
+            onclick="event.preventDefault(); var basePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/users/loggedin')); var redirectPath = '<%= redirectUrl %>'; window.location.href = redirectPath.startsWith('/') ? basePath + redirectPath : redirectPath;">click
+            here</a>.</p>
 </body>
 
 </html>

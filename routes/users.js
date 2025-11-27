@@ -184,7 +184,7 @@ router.post('/loggedin', redirectIfLoggedIn, [
 router.get('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.redirect('./')
+            return res.redirect('/')
         }
         res.render('message', {
             title: 'Logged Out',
