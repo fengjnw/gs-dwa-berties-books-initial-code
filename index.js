@@ -6,7 +6,7 @@ const path = require('path')
 const expressSanitizer = require('express-sanitizer');
 
 // Import mysql2
-var mysql = require('mysql2');
+const mysql = require('mysql2');
 
 // Import dotenv
 require('dotenv').config();
