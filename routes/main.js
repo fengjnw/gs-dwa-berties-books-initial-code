@@ -18,7 +18,7 @@ router.get('/about', function (req, res, next) {
 });
 
 router.get('/weather', function (req, res, next) {
-    const apiKey = 'd44dc98a573ec85fca3308cb3e535b96'
+    const apiKey = process.env.WEATHER_API_KEY;
     if (!req.query.city) {
         res.render('weather.ejs', { weatherData: null });
         return;
