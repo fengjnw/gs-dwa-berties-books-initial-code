@@ -72,7 +72,7 @@ router.get('/weather', function (req, res, next) {
         if (weather.cod != 200) {
             return res.render('message', {
                 title: 'Error',
-                message: 'Failed to get weather data. Please try again.',
+                message: `Failed to get weather data of ${city}. Please check the city name and try again.`,
                 backLink: '/weather'
             });
         }
