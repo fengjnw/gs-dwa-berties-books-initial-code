@@ -102,7 +102,7 @@ node index.js
 - Access at `/weather`
 - Real-time weather information using OpenWeatherMap API
 - City-based weather search with comprehensive error handling
-- Displays temperature, weather conditions, and icon
+- Displays icon, weather conditions, temperature, and details
 - Shows detailed metrics: pressure, humidity, wind speed and direction
 - Dynamic temperature color coding:
   - Blue (< 0°C) - Freezing
